@@ -8,8 +8,8 @@ dependencies = [
     "html2text>=2025.4.15",
 ]
 
-# 第III部（実装）で使う依存。既定では導入しない。
-#   uv sync --extra train   で 強化学習のミニ実装用の依存を入れる
+# 学習用コードの依存。既定では導入しない。
+#   uv sync --extra train   で PyTorch / MuJoCo など（第1部以降で使用）を入れる
 #   uv sync --extra viz     で 可視化用の依存を入れる
 [project.optional-dependencies]
 train = [
@@ -24,6 +24,7 @@ viz = [
 
 [project.scripts]
 ml-lern = "ml_lern:main"
+ml-lern-docs = "ml_lern.docsite.__main__:main"
 
 [build-system]
 requires = ["uv_build>=0.13.0,<0.14.0"]

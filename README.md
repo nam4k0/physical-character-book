@@ -1,6 +1,6 @@
-# ml-lern — 物理キャラクタのシーン相互作用を学ぶ教科書
+# ml-lern — アニメーションAI学習パス
 
-このリポジトリは、ゲームエンジニア向けに次の論文を解説・実装する教科書です。
+このリポジトリは、ゲームエンジニア向けに **アニメーションAIを PyTorch から物理キャラクタ制御まで**学ぶ教科書です。最終的な到達点は次の論文です。
 
 > Mohamed Hassan, Yunrong Guo, Tingwu Wang, Michael Black, Sanja Fidler, Xue Bin Peng.
 > **Synthesizing Physical Character-Scene Interactions.**
@@ -8,27 +8,46 @@
 
 ## どこから読むか
 
-- **教科書本体**: [`docs/README.md`](docs/README.md)（目次・読み方・全体像）
-- 第I部: 機械学習の基礎（RL・PPO・模倣学習・敵対学習・AMP・PD制御）
-- 第II部: 論文の解説（数式・実験・比較）
-- 第III部: 実装（人型本線＋寄り道、MuJoCo + PyTorch）
-- 付録: 用語集・拡散モデル・演習・参考リソース
+- **教科書本体**: [`docs/README.md`](docs/README.md)（目次・学習パス・全体像）
+- 第0部: はじめに
+- 第1部: Python・PyTorch・ニューラルネット・時系列データ
+- 第2部: 生成モデル・GAN・拡散モデル（モーション生成）
+- 第3部: 物理シミュレーション（MuJoCo）
+- 第4部: 強化学習（PPO）
+- 第5部: 模倣学習・AMP
+- 第6部: 論文を読む
+- 第7部: 実装
+
+> 第1・2部は執筆済み、第3部以降は執筆予定です。
 
 ## 実装コード
 
 ```
-src/ml_lern/mini_amp/   AMP による物理キャラ制御のミニ実装
-src/ml_lern/diffusion/  拡散モデル（付録B）
-scripts/                学習・生成のエントリポイント
+src/ml_lern/
+  foundations/   第1部: テンソル・NN・時系列・系列モデル
+  generative/    第2部: AE/VAE・GAN・拡散モデル
+  mini_amp/      物理キャラ制御のミニ実装（第3部以降で再編予定）
+  docsite/       docs/ をブラウザ表示するツール
+scripts/         各段階のエントリポイント（f01〜, g01〜, train_〜）
 ```
 
-第III部の依存を導入する場合:
+学習用の依存を導入する場合:
 
 ```bash
 uv sync --extra train --extra viz
 ```
 
-> **注意**: 本リポジトリの実行環境（CPU・メモリ約5GiB・CUDAなし）では、論文本来の IsaacGym は動きません。第III部のコードは MuJoCo + PyTorch（CPU）で動く小規模版で、本リポジトリでは実行・検証していません（読者の環境で動かす前提）。
+## ドキュメントをブラウザで見る
+
+```bash
+uv run ml-lern-docs            # http://localhost:8000
+uv run ml-lern-docs --build site/
+```
+
+## 注意
+
+- 本リポジトリの実行環境（CPU・メモリ約5GiB・CUDAなし）では、論文本来の IsaacGym は動きません。物理・RL のコードは MuJoCo + PyTorch（CPU）の小規模版です。
+- 本文のコードは読者が自分の環境で動かす前提で、本リポジトリでは実行・検証していません。
 
 ## 元資料
 
