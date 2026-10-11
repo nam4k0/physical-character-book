@@ -28,7 +28,7 @@ jobs:
       - name: Build static site
         # docs/ の Markdown とライブラリを _site/ にまとめる
         # （ブラウザで描画する方式なので、.md と /lib も成果物に含まれる）
-        run: uv run ml-lern-docs --build _site
+        run: uv run ml-lern-docs --build _site --title "アニメーションAI学習パス"
 
       - name: Configure Pages
         uses: actions/configure-pages@v6
