@@ -44,12 +44,14 @@ def _first_heading(text: str, fallback: str) -> str:
 
 
 def _page_url(rel: Path) -> str:
+    # ブラウザから見た相対 URL。GitHub Pages のようなサブパス配信でも壊れない。
     if rel.name == "README.md":
-        return "/index.html"
-    return "/" + rel.with_suffix(".html").as_posix()
+        return "index.html"
+    return rel.with_suffix(".html").as_posix()
 
 
 def _md_url(rel: Path) -> str:
+    # ローカルサーバーのルックアップ用（絶対パス）
     return "/" + rel.as_posix()
 
 
@@ -93,7 +95,7 @@ def build_site(
         "pages": site.nav,
         "libs": libs,
     }
-    site.shell = render_shell(docs)
+    site.shell = render_shell(docs, app_js="app.js", app_css="app.css")
 
     site.assets["/app.js"] = ("text/javascript; charset=utf-8", read_static("app.js"))
     site.assets["/app.css"] = ("text/css; charset=utf-8", read_static("app.css"))
@@ -106,6 +108,9 @@ def write_site(site: Site, out_dir: Path) -> None:
 
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    # GitHub Pages で Jekyll による変換（.md → .html）を止める
+    (out_dir / ".nojekyll").write_text("", encoding="utf-8")
 
     for page_url in site.page_urls:
         rel = urllib.parse.unquote(page_url.lstrip("/"))

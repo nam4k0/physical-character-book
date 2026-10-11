@@ -45,6 +45,22 @@ uv run ml-lern-docs            # http://localhost:8000
 uv run ml-lern-docs --build site/
 ```
 
+本文の描画はブラウザ側で行います（サーバーは Markdown・HTML の殻・ライブラリを返すだけ）。
+ページ間リンクや数式（KaTeX）・図（Mermaid）もブラウザ側で処理し、必要なページだけ
+ライブラリを読み込みます。
+
+### GitHub Pages で公開
+
+`main` への push を契機に GitHub Actions が `docs/` をビルドして公開します。
+
+- 公開先: <https://nam4k0.github.io/physical-character-book/>
+- ワークフロー: [`.github/workflows/pages.yml`](.github/workflows/pages.yml)
+- 成果物は `_site/` に生成（`.nojekyll` を含む）
+
+初回のみ、リポジトリの Settings → Pages で Source を **GitHub Actions** に設定します
+（`gh api -X POST repos/nam4k0/physical-character-book/pages -f build_type=workflow` でも可）。
+サイト内のリンクは相対 URL なので、`/<repo>/` のようなサブパス配信でもそのまま動作します。
+
 ## 注意
 
 - 本リポジトリの実行環境（CPU・メモリ約5GiB・CUDAなし）では、論文本来の IsaacGym は動きません。物理・RL のコードは MuJoCo + PyTorch（CPU）の小規模版です。

@@ -106,7 +106,8 @@ def _prepare_katex_fonts(
             continue
         url = f"/lib/katex/fonts/{Path(name).name}"
         assets[url] = (FONT, data)
-        url_map[name] = url
+        # CSS からの相対（CSS は lib/ 直下にあるので katex/fonts/...）
+        url_map[name] = f"katex/fonts/{Path(name).name}"
     return assets, url_map
 
 
@@ -139,6 +140,6 @@ def prepare_libs(
 
         url = f"/lib/{filename}{ext}"
         assets[url] = (spec["ctype"], data)
-        urls[spec["name"]] = url
+        urls[spec["name"]] = f"lib/{filename}{ext}"  # ブラウザから見た相対 URL
 
     return urls, assets

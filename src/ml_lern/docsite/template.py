@@ -46,7 +46,7 @@ SHELL = """<!DOCTYPE html>
 """
 
 
-def render_shell(docs: dict, *, app_js: str = "/app.js", app_css: str = "/app.css") -> str:
+def render_shell(docs: dict, *, app_js: str = "app.js", app_css: str = "app.css") -> str:
     """docs（ページ一覧・サイト名・ライブラリ URL）を埋め込んだ殻を作る。"""
     payload = json.dumps(docs, ensure_ascii=False).replace("</", "<\\/")
     return SHELL.format(

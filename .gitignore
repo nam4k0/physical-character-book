@@ -8,3 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# GitHub Pages のビルド出力
+_site/

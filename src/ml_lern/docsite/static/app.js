@@ -69,22 +69,16 @@
 
   // --- ブラウザ側の処理 -------------------------------------------------
 
-  function currentUrl() {
+  function currentFile() {
     var path = decodeURIComponent(location.pathname);
-    if (path === "" || path === "/") return "/index.html";
-    return path;
+    var name = path.split("/").pop();
+    return name || "index.html";
   }
 
-  function mdUrlFor(pageUrl, pages) {
-    var page = null;
-    for (var i = 0; i < pages.length; i++) {
-      if (pages[i].url === pageUrl) { page = pages[i]; break; }
-    }
-    if (!page && pageUrl.endsWith(".html")) {
-      return pageUrl.replace(/\.html$/, ".md");
-    }
-    if (!page) return "/README.md";
-    return page.url === "/index.html" ? "/README.md" : page.url.replace(/\.html$/, ".md");
+  function mdUrlFor(file) {
+    if (file === "" || file === "index.html") return "README.md";
+    if (file.slice(-5) === ".html") return file.slice(0, -5) + ".md";
+    return "README.md";
   }
 
   var _scripts = {};
@@ -127,11 +121,12 @@
     nav.innerHTML = html;
   }
 
-  function markActive(pageUrl) {
+  function markActive(file) {
     var links = document.querySelectorAll("#nav a");
     for (var i = 0; i < links.length; i++) {
+      links[i].classList.remove("current");
       var href = links[i].getAttribute("href");
-      if (href === pageUrl) links[i].classList.add("current");
+      if (href === file) links[i].classList.add("current");
     }
   }
 
@@ -216,9 +211,9 @@
     var data = window.__DOCS__;
     if (!data) return;
     renderNav(data);
-    var pageUrl = currentUrl();
-    markActive(pageUrl === "/" ? "/index.html" : pageUrl);
-    var mdUrl = mdUrlFor(pageUrl, data.pages);
+    var file = currentFile();
+    markActive(file);
+    var mdUrl = mdUrlFor(file);
 
     var text;
     try {
