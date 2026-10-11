@@ -7,7 +7,7 @@ AMP は使わず、まず素の PPO だけを回して RL のループに慣れ�
 人型の「体幹を保つ」能力の最小モデル。
 """
 
-from ml_lern.mini_amp.train import train
+from ml_lern.charcontrol.train import train
 
 if __name__ == "__main__":
     train("pendulum", use_amp=False, overrides={"num_envs": 16, "episode_length_s": 10.0})

@@ -6,7 +6,7 @@
 スタイル報酬（AMP）を加えて、自然な歩行を学ばせる。
 """
 
-from ml_lern.mini_amp.train import train
+from ml_lern.charcontrol.train import train
 
 if __name__ == "__main__":
     train("humanoid_amp", use_amp=True, overrides={"num_envs": 16, "episode_length_s": 10.0})

@@ -6,7 +6,7 @@
 目標（物体）を状態に含める「シーン条件付けの入り口」を体験する。
 """
 
-from ml_lern.mini_amp.train import train
+from ml_lern.charcontrol.train import train
 
 if __name__ == "__main__":
     train("reacher", use_amp=False, overrides={"num_envs": 16})

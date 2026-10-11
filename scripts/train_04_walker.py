@@ -7,7 +7,7 @@
 
 import argparse
 
-from ml_lern.mini_amp.train import train
+from ml_lern.charcontrol.train import train
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

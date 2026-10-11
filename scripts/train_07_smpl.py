@@ -12,7 +12,7 @@
 読者の環境で動かす想定。
 """
 
-from ml_lern.mini_amp.train import train
+from ml_lern.charcontrol.train import train
 
 if __name__ == "__main__":
     train("smpl", use_amp=True, overrides={"num_envs": 16, "episode_length_s": 15.0})
