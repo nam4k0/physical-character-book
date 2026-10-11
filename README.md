@@ -29,6 +29,7 @@ src/ml_lern/
   charcontrol/   第6〜7部: 環境・学習
   docsite/       docs/ をブラウザ表示するツール
 scripts/         各段階のエントリポイント
+recipes/         再現レシピ（付録E・F）の実行コード
 ```
 
 学習用の依存を導入する場合:
