@@ -163,6 +163,30 @@ uv run python scripts/p04_amp.py
 - タスク報酬とスタイル報酬を重み付きで足す（式(1)と同形）。
 - AMP は物体を見ない。論文はここにシーン条件付けを加える。
 
+## 手を動かそう
+
+> **一歩目**: 識別器を「本物の動き」「偽物の動き」で訓練し、スタイル報酬の値の変化を見る。
+
+```python
+import torch
+from ml_lern.core.amp import AMPUpdater
+from ml_lern.core.config import default_config
+up = AMPUpdater(16, default_config())
+real = torch.randn(256, 16) - 1.0
+fake = torch.randn(256, 16) + 1.0
+for _ in range(300):
+    up.update(fake, real)
+print("本物:", up.predict_style_reward(real[:3]).round(3).tolist())
+print("偽物:", up.predict_style_reward(fake[:3]).round(3).tolist())
+```
+
+**いじってみる**: `real` と `fake` を近づけると、識別器が区別できなくなり（acc≈0.5）、報酬が近づく。これが「自然さを学ぶ」状態です。
+
+**夢が広がる**:
+- 自分のゲームの MoCap（またはアニメ）で AMP を学習し、自然な敵の動きを作る。
+- プレイヤーの動きの癖を識別器に学ばせ、個性を再現する。
+- 「このゲームらしい動き」をスタイルとして学習し、新キャラに移植する。
+
 ## 演習
 
 1. AMP の識別器に単一の状態ではなく遷移を入れる理由を、ポーズと動きの違いで説明しましょう。

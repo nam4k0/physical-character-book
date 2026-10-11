@@ -232,6 +232,32 @@ uv run python scripts/p01_mujoco_basics.py
 - gymnasium 経由で標準タスク（倒立振子〜人型）が使える。
 - この環境が、第4部以降の強化学習の舞台になる。
 
+## 手を動かそう
+
+> **一歩目**: 自分のゲームのオブジェクト（箱、坂、玉）を MuJoCo の XML で書いて、転がしてみる。
+
+```xml
+<mujoco model="my_scene">
+  <option timestep="0.002"/>
+  <worldbody>
+    <geom name="floor" type="plane" size="5 5 0.1"/>
+    <body name="box" pos="0 0 1">
+      <geom type="box" size="0.2 0.2 0.2" rgba="1 0.5 0 1"/>
+      <freejoint/>
+    </body>
+  </worldbody>
+</mujoco>
+```
+
+`mujoco.MjModel.from_xml_string(...)` で読み込み、`mj_step` を回して、箱が落ちて跳ねるのを見る。
+
+**いじってみる**: `size` や `density`、`friction` を変えて挙動を観察する。`freejoint` を `hinge` にすると「蝶番で回る板」になる。
+
+**夢が広がる**:
+- ゲームの物理挙動を MuJoCo で再現し、パラメータ調整に使う。
+- 破壊オブジェクト（積み木、ドミノ）の挙動を事前検証する。
+- 物理的なパズルの自動テストや、挙動バグの再現に使う。
+
 ## 演習
 
 1. 上の XML を実行し、台車が動くことを確認しましょう。

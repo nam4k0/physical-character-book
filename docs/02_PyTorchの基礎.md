@@ -244,6 +244,26 @@ uv run python scripts/f02_mlp.py        # 最小の学習
 - `nn.Module` で層を部品化し、オプティマイザで更新する。
 - この環境は CPU のみ。`device="cpu"` を使う。
 
+## 手を動かそう
+
+> **一歩目**: 自分のゲームの数式を1つ、PyTorch で自動微分する。例: ジャンプ到達高さ `h = v^2/(2g)` を、勾配で最大化する。
+
+```python
+import torch
+v = torch.tensor(1.0, requires_grad=True)
+g = 9.8
+h = v**2 / (2*g)
+h.backward()
+print(v.grad)          # dh/dv = v/g > 0 → v を増やすと h が上がる
+```
+
+**いじってみる**: `v` を勾配の向きに少しずつ動かす（`v.data += 0.1 * v.grad` を `zero_grad` 付きで繰り返す）と、`h` が上がるのを確認する。`g` も `requires_grad=True` にすると、重力を下げる方向の勾配も出る。
+
+**夢が広がる**:
+- ゲームバランス（ダメージ式・成長曲線）のパラメータを、「目標に合うよう自動調整」する。
+- 砲弾・弓矢の軌道パラメータを、当たるように勾配で最適化する。
+- アニメの補間パラメータを、自然に見えるよう自動で合わせる。
+
 ## 演習
 
 1. `x = torch.tensor(3.0, requires_grad=True)` として `y = x**3` を定義し、`y.backward()` の後の `x.grad` を予想してから確認しましょう（ヒント: $3x^2$）。
